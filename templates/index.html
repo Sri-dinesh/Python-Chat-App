@@ -13,12 +13,14 @@
 
     <style>
       :root {
-        --primary-color: #4a90e2;
+        /* --primary-color: #4a90e2; */
+        --primary-color: hsla(217 100% 56% / 1);
         --primary-light: #5da8ff;
         --primary-dark: #3a7cbd;
         --secondary-color: #e8f1f8;
         --text-color: #2c3e50;
-        --bg-color: #f0f8ff;
+        /* --bg-color: #f0f8ff; */
+        --bg-color: #edf2f4;
         --message-bg: #e1eeff;
         --system-message-color: #8fa4b8;
       }
@@ -158,15 +160,126 @@
         margin-right: 0;
         margin-left: 10px;
       }
+
+      button {
+        font-family: inherit;
+        font-size: 18px;
+        background: linear-gradient(to bottom, #4dc7d9 0%, #66a6ff 100%);
+        color: white;
+        padding: 0.8em 1.2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 50px;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s;
+      }
+
+      button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      button:active {
+        transform: scale(0.95);
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      button span {
+        display: block;
+        margin-left: 0.4em;
+        transition: all 0.3s;
+      }
+
+      button svg {
+        width: 18px;
+        height: 18px;
+        fill: white;
+        transition: all 0.3s;
+      }
+
+      button .svg-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.2);
+        margin-right: 0.5em;
+        transition: all 0.3s;
+      }
+
+      button:hover .svg-wrapper {
+        background-color: rgba(255, 255, 255, 0.5);
+      }
+
+      button:hover svg {
+        transform: rotate(45deg);
+      }
+
+      /* update user name button */
+      .btn-donate {
+        --clr-font-main: hsla(0 0% 20% / 100);
+        --btn-bg-1: hsla(194 100% 69% / 1);
+        --btn-bg-2: hsla(217 100% 56% / 1);
+        --btn-bg-color: hsla(360 100% 100% / 1);
+        /* --radii: 0.5em; */
+        --radii: 2em;
+        cursor: pointer;
+        padding: 0.9em 1.4em;
+        min-width: 120px;
+        min-height: 44px;
+        font-size: var(--size, 1rem);
+        font-weight: 500;
+        transition: 0.8s;
+        background-size: 280% auto;
+        background-image: linear-gradient(
+          325deg,
+          var(--btn-bg-2) 0%,
+          var(--btn-bg-1) 55%,
+          var(--btn-bg-2) 90%
+        );
+        border: none;
+        border-radius: var(--radii);
+        color: var(--btn-bg-color);
+        box-shadow: 0px 0px 20px rgba(71, 184, 255, 0.5),
+          0px 5px 5px -1px rgba(58, 125, 233, 0.25),
+          inset 4px 4px 8px rgba(175, 230, 255, 0.5),
+          inset -4px -4px 8px rgba(19, 95, 216, 0.35);
+      }
+
+      .btn-donate:hover {
+        background-position: right top;
+      }
+
+      .btn-donate:is(:focus, :focus-visible, :active) {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--btn-bg-color), 0 0 0 6px var(--btn-bg-2);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .btn-donate {
+          transition: linear;
+        }
+      }
     </style>
   </head>
   <body>
     <div class="chat-container">
-      <div class="chat-header">Python Chat</div>
+      <div class="chat-header">Simple Python Chat App</div>
       <div class="username-container">
         <span id="current-username"></span>
-        <input type="text" id="username-input" placeholder="New username" />
-        <button id="update-username-button">Update Username</button>
+        <input
+          type="text"
+          id="username-input"
+          placeholder="Enter your New username"
+        />
+        <!-- <button id="update-username-button">Update Username</button> -->
+        <button class="btn-donate update-username-button">
+          Update Username
+        </button>
       </div>
       <div class="chat-messages" id="chat-messages"></div>
       <div class="chat-input">
@@ -175,7 +288,26 @@
           id="message-input"
           placeholder="Type your message..."
         />
-        <button id="send-button">Send</button>
+        <!-- <button id="send-button">Send</button> -->
+        <button class="send-button">
+          <div class="svg-wrapper-1">
+            <div class="svg-wrapper">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+              >
+                <path fill="none" d="M0 0h24v24H0z"></path>
+                <path
+                  fill="currentColor"
+                  d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
+                ></path>
+              </svg>
+            </div>
+          </div>
+          <span>Send</span>
+        </button>
       </div>
     </div>
 
