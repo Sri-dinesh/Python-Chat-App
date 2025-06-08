@@ -23,3 +23,6 @@ pip-selfcheck.json
 # Dependency directories
 node_modules/
 /dist/
+
+
+__pycache__/

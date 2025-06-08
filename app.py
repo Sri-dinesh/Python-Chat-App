@@ -3,7 +3,7 @@ from flask_socketio import SocketIO, emit
 import random
 
 app = Flask(__name__)
-SocketIO = SocketIO(app)
+socketio = SocketIO(app)
 
 #python dict. store connected users. key is socket id value is username and avatarUrl
 users = {}
@@ -13,7 +13,7 @@ def index():
     return render_template("index.html")
 
 #we are listening for the connect event
-@SocketIO.on("connect")
+@socketio.on("connect")
 def handle_connect():
     username= f"user_{random.randint(1000, 9999)}"
     gender = random.choice(["girl", "boy"])
@@ -31,7 +31,7 @@ def handle_connect():
 
 
 
-@SocketIO.on("disconnect")
+@socketio.on("disconnect")
 def handle_disconnect():
     user = users.pop(request.sid, None)
     if user:
@@ -39,7 +39,7 @@ def handle_disconnect():
 
 
 
-@SocketIO.on("send_message")
+@socketio.on("send_message")
 def handle_message(data):
     user = users.get(request.sid)
     if user:
@@ -51,7 +51,7 @@ def handle_message(data):
 
 
 
-@SocketIO.on("update_username")
+@socketio.on("update_username")
 def handle_update_username(data):
     old_username = users[request.sid]["username"]
     new_username = data["username"]
@@ -63,4 +63,4 @@ def handle_update_username(data):
 
 
 if __name__ == "__main__":
-    SocketIO.run(app, host="0.0.0.0", port=5000)
+    socketio.run(app, debug=True, port=5000)

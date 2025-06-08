@@ -35,33 +35,58 @@
 
       .chat-container {
         max-width: 800px;
+        width: 95%;
         margin: 20px auto;
         background-color: white;
         border-radius: 15px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: 90vh;
       }
 
       .chat-header {
         background-color: var(--primary-color);
         color: white;
-        padding: 20px;
+        padding: 15px;
         text-align: center;
-        font-size: 24px;
+        font-size: clamp(18px, 4vw, 24px);
         font-weight: bold;
       }
 
       .chat-messages {
-        height: 400px;
+        flex-grow: 1;
         overflow-y: auto;
         padding: 20px;
         background-color: var(--secondary-color);
+        scrollbar-width: thin;
+        scrollbar-color: var(--primary-color) var(--secondary-color);
+      }
+
+      .chat-messages::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .chat-messages::-webkit-scrollbar-track {
+        background: var(--secondary-color);
+      }
+
+      .chat-messages::-webkit-scrollbar-thumb {
+        background-color: var(--primary-color);
+        border-radius: 4px;
       }
 
       .message {
         margin-bottom: 15px;
         display: flex;
         align-items: flex-start;
+        animation: fadeIn 0.3s ease-in;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
       }
 
       .message img {
@@ -88,17 +113,19 @@
 
       .chat-input {
         display: flex;
-        padding: 20px;
+        padding: 15px;
         background-color: white;
         border-top: 1px solid var(--secondary-color);
+        gap: 10px;
       }
 
       #message-input,
       #username-input {
         flex-grow: 1;
-        padding: 12px;
-        border: 1px solid var(--secondary-color);
+        padding: 12px 20px;
+        border: 2px solid var(--secondary-color);
         border-radius: 25px;
+        transition: border-color 0.3s ease;
         margin-right: 10px;
         font-size: 16px;
       }
@@ -162,41 +189,48 @@
       }
 
       button {
-        font-family: inherit;
-        font-size: 18px;
-        background: linear-gradient(to bottom, #4dc7d9 0%, #66a6ff 100%);
-        color: white;
-        padding: 0.8em 1.2em;
+        padding: 1.3em 3em;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 2.5px;
+        font-weight: 500;
+        color: #000;
+        background-color: #fff;
+        border: none;
+        border-radius: 45px;
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease 0s;
+        cursor: pointer;
+        outline: none;
         display: flex;
         align-items: center;
         justify-content: center;
-        border: none;
-        border-radius: 50px;
-        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s;
       }
 
       button:hover {
-        transform: translateY(-3px);
-        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+        background-color: #23c483;
+        box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+        color: #fff;
+        transform: translateY(-7px);
       }
 
       button:active {
-        transform: scale(0.95);
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        transform: translateY(-1px);
       }
 
       button span {
         display: block;
         margin-left: 0.4em;
-        transition: all 0.3s;
       }
 
       button svg {
         width: 18px;
         height: 18px;
-        fill: white;
         transition: all 0.3s;
+      }
+
+      button:hover svg {
+        fill: #fff;
       }
 
       button .svg-wrapper {
@@ -219,50 +253,71 @@
         transform: rotate(45deg);
       }
 
-      /* update user name button */
-      .btn-donate {
-        --clr-font-main: hsla(0 0% 20% / 100);
-        --btn-bg-1: hsla(194 100% 69% / 1);
-        --btn-bg-2: hsla(217 100% 56% / 1);
-        --btn-bg-color: hsla(360 100% 100% / 1);
-        /* --radii: 0.5em; */
-        --radii: 2em;
-        cursor: pointer;
-        padding: 0.9em 1.4em;
-        min-width: 120px;
-        min-height: 44px;
-        font-size: var(--size, 1rem);
-        font-weight: 500;
-        transition: 0.8s;
-        background-size: 280% auto;
-        background-image: linear-gradient(
-          325deg,
-          var(--btn-bg-2) 0%,
-          var(--btn-bg-1) 55%,
-          var(--btn-bg-2) 90%
-        );
-        border: none;
-        border-radius: var(--radii);
-        color: var(--btn-bg-color);
-        box-shadow: 0px 0px 20px rgba(71, 184, 255, 0.5),
-          0px 5px 5px -1px rgba(58, 125, 233, 0.25),
-          inset 4px 4px 8px rgba(175, 230, 255, 0.5),
-          inset -4px -4px 8px rgba(19, 95, 216, 0.35);
-      }
-
-      .btn-donate:hover {
-        background-position: right top;
-      }
-
-      .btn-donate:is(:focus, :focus-visible, :active) {
-        outline: none;
-        box-shadow: 0 0 0 3px var(--btn-bg-color), 0 0 0 6px var(--btn-bg-2);
-      }
-
       @media (prefers-reduced-motion: reduce) {
-        .btn-donate {
+        button {
           transition: linear;
         }
+      }
+
+      /* Mobile Responsive Design */
+      @media screen and (max-width: 768px) {
+        .chat-container {
+          width: 100%;
+          margin: 0;
+          height: 100vh;
+          border-radius: 0;
+        }
+
+        .chat-header {
+          padding: 10px;
+        }
+
+        .chat-input {
+          padding: 10px;
+        }
+
+        .message-content {
+          max-width: 85%;
+        }
+
+        .username-container {
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+
+        #username-input {
+          width: 100%;
+          order: 2;
+        }
+
+        .btn-donate {
+          width: 100%;
+          order: 3;
+        }
+
+        #current-username {
+          width: 100%;
+          order: 1;
+          text-align: center;
+        }
+
+        .message img {
+          width: 32px;
+          height: 32px;
+        }
+      }
+
+      /* Input Focus Styles */
+      #message-input:focus,
+      #username-input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+      }
+
+      /* Prevent text from overflowing */
+      .message-content {
+        word-break: break-word;
       }
     </style>
   </head>
@@ -276,8 +331,7 @@
           id="username-input"
           placeholder="Enter your New username"
         />
-        <!-- <button id="update-username-button">Update Username</button> -->
-        <button class="btn-donate update-username-button">
+        <button class="update-username-button">
           Update Username
         </button>
       </div>
@@ -315,22 +369,52 @@
       const socket = io();
       const chatMessages = document.getElementById("chat-messages");
       const messageInput = document.getElementById("message-input");
-      const sendButton = document.getElementById("send-button");
+      const sendButton = document.querySelector(".send-button");
       const currentUsernameSpan = document.getElementById("current-username");
       const usernameInput = document.getElementById("username-input");
-      const updateUsernameButton = document.getElementById(
-        "update-username-button"
-      );
+      const updateUsernameButton = document.querySelector(".update-username-button");
 
-      let currentUsername = "";
+      let currentUsername = localStorage.getItem('username') || "";
+      const MAX_STORED_MESSAGES = 50;
+      
+      // Load stored messages
+      const loadStoredMessages = () => {
+        const messages = JSON.parse(localStorage.getItem('messages') || '[]');
+        messages.forEach(msg => {
+          if (msg.type === 'user') {
+            addMessage(msg.message, 'user', msg.username, msg.avatar);
+          } else {
+            addMessage(msg.message, 'system');
+          }
+        });
+      };
+
+      // Store message in localStorage
+      const storeMessage = (message, type, username = "", avatar = "") => {
+        const messages = JSON.parse(localStorage.getItem('messages') || '[]');
+        messages.push({ message, type, username, avatar, timestamp: Date.now() });
+        
+        // Keep only the last MAX_STORED_MESSAGES messages
+        if (messages.length > MAX_STORED_MESSAGES) {
+          messages.splice(0, messages.length - MAX_STORED_MESSAGES);
+        }
+        
+        localStorage.setItem('messages', JSON.stringify(messages));
+      };
+
+      // Load stored messages on startup
+      loadStoredMessages();
 
       socket.on("set_username", (data) => {
         currentUsername = data.username;
+        localStorage.setItem('username', currentUsername);
         currentUsernameSpan.textContent = `Your username: ${currentUsername}`;
       });
 
       socket.on("user_joined", (data) => {
-        addMessage(`${data.username} joined the chat`, "system");
+        const message = `${data.username} joined the chat`;
+        addMessage(message, "system");
+        storeMessage(message, "system");
       });
 
       socket.on("user_left", (data) => {
@@ -338,16 +422,18 @@
       });
 
       socket.on("new_message", (data) => {
-        addMessage(data.message, "user", data.username, data.avatar);
+        addMessage(data.message, "user", data.username, data.avatarUrl);
+        storeMessage(data.message, "user", data.username, data.avatarUrl);
       });
 
       socket.on("username_updated", (data) => {
-        addMessage(
-          `${data.old_username} changed their name to ${data.new_username}`,
-          "system"
-        );
+        const message = `${data.old_username} changed their name to ${data.new_username}`;
+        addMessage(message, "system");
+        storeMessage(message, "system");
+        
         if (data.old_username === currentUsername) {
           currentUsername = data.new_username;
+          localStorage.setItem('username', currentUsername);
           currentUsernameSpan.textContent = `Your username: ${currentUsername}`;
         }
       });
